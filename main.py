@@ -1,13 +1,14 @@
 import easyocr
 
-reader = easyocr.Reader(['en'])
+reader = easyocr.Reader(['en', 'uz'])
 
 # Read the processed image
-result = reader.readtext('images/1.png',
-                       width_ths=1,
-                       decoder='beamsearch',
-                       contrast_ths=0.3,
-                       adjust_contrast=0.7)
+result = reader.readtext('images/2.png', 
+                       paragraph=True,
+                       detail=0,  # Get individual text boxes
+                       decoder='beamsearch',  # Better for short text
+                       beamWidth=10,
+                       width_ths=0.3,  # Merge closer characters
+                       text_threshold=0.7)
 
-for (bbox, text, prob) in result:
-    print(text)
+print(result)
